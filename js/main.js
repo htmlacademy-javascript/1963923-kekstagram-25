@@ -1,5 +1,11 @@
 //https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomInt(min, max) {
+  if (min < 0) {
+    min = 0;
+  }
+  if (max < 0) {
+    max = 0;
+  }
   if (min > max) {
     const swap = min;
     min = max;
