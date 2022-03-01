@@ -51,37 +51,48 @@ const NAMES = [
   'Дарья'
 ];
 
+const MIN_AVATAR = 1;
+const MAX_AVATAR = 6;
+const MIN_COMMENTS_COUNT = 0;
+const MAX_COMMENTS_COUNT = 5;
+const MIN_LIKES_COUNT = 15;
+const MAX_LIKES_COUNT = 200;
+const PHOTOS_COUNT = 25;
+
 const getRandomArrayElement = (elements) => elements[getRandomInt(0, elements.length - 1)];
 const getComment = (id) => {
   const comment = {
     id: id,
-    avatar: `img/avatar/${  getRandomInt(1, 6)  }.svg`,
+    avatar: `img/avatar/${  getRandomInt(MIN_AVATAR, MAX_AVATAR)  }.svg`,
     message: `${getRandomArrayElement(MESSAGES)  } ${  getRandomArrayElement(MESSAGES)}`,
     name: getRandomArrayElement(NAMES)
   };
   return comment;
 };
 
-const getRandomArray = (callback) => {
-  const count = getRandomInt(0, 5);
-  const comments = [];
+const getRandomArray = (callback, count) => {
+  const data = [];
   for (let i = 0; i < count; i++){
-    comments.push(callback(i + 1));
+    data.push(callback(i + 1));
   }
-  return comments;
+  return data;
 };
 
-const photos = [];
-for(let i = 1; i <= 25; i++){
+const getPhoto = (id) =>{
+  const commentsCount = getRandomInt(MIN_COMMENTS_COUNT, MAX_COMMENTS_COUNT);
   const photo = {
-    id: i,
-    url: `photos/${  i  }.jpg`,
+    id: id,
+    url: `photos/${  id  }.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomInt(15, 200),
-    comments: getRandomArray(getComment)
+    likes: getRandomInt(MIN_LIKES_COUNT, MAX_LIKES_COUNT),
+    comments: getRandomArray(getComment, commentsCount)
   };
-  photos.push(photo);
-}
+  return photo;
+};
 
 
+const getPhotos = (count) => getRandomArray(getPhoto, count);
+
+
+getPhotos(PHOTOS_COUNT);
 getLengthOfString('qwerty', 10);
