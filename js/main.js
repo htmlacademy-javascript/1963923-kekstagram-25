@@ -1,7 +1,5 @@
-import {getPhotos} from './data.js';
 import {getLengthOfString} from './util.js';
+import {drawPhotos} from './draw.js';
 
-const PHOTOS_COUNT = 25;
-
-getPhotos(PHOTOS_COUNT);
 getLengthOfString('qwerty', 10);
+drawPhotos();
