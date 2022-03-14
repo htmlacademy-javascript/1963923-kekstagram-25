@@ -2,8 +2,8 @@ const photosElement = document.querySelector('.pictures');
 const photoTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
-const photosFragment = document.createDocumentFragment();
 const drawPhotos = (photos) => {
+  const photosFragment = document.createDocumentFragment();
   photos.forEach(({url, likes, comments}) => {
     const photoElement = photoTemplate.cloneNode(true);
     photoElement.querySelector('.picture__img').src = url;
