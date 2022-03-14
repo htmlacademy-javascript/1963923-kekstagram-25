@@ -1,5 +1,11 @@
-import {getLengthOfString} from './util.js';
+import {getPhotos} from './data.js';
 import {drawPhotos} from './draw.js';
+import {getLengthOfString} from './util.js';
 
-getLengthOfString('qwerty', 10);
+const PHOTOS_COUNT = 25;
+const photos = getPhotos(PHOTOS_COUNT);
+
+getPhotos();
 drawPhotos();
+getLengthOfString('qwerty', 10);
+export{photos};
