@@ -1,12 +1,9 @@
-import {photos} from './main.js';
-
 const photosElement = document.querySelector('.pictures');
 const photoTemplate = document.querySelector('#picture')
   .content
   .querySelector('.picture');
 const photosFragment = document.createDocumentFragment();
-
-const drawPhotos = () => {
+const drawPhotos = (photos) => {
   photos.forEach(({url, likes, comments}) => {
     const photoElement = photoTemplate.cloneNode(true);
     photoElement.querySelector('.picture__img').src = url;

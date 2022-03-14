@@ -4,8 +4,5 @@ import {getLengthOfString} from './util.js';
 
 const PHOTOS_COUNT = 25;
 const photos = getPhotos(PHOTOS_COUNT);
-
-getPhotos();
-drawPhotos();
+drawPhotos(photos);
 getLengthOfString('qwerty', 10);
-export{photos};
