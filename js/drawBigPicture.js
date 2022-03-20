@@ -8,6 +8,19 @@ const bigPictureCommentCount = bigPictureElement.querySelector('.social__comment
 const bigPictureCommentsLoader = bigPictureElement.querySelector('.comments-loader');
 const modalOpenElement = document.querySelector('body');
 const closeBigPictureElement = bigPictureElement.querySelector('#picture-cancel');
+const WIDTH = 35;
+const HEIGTH = 35;
+const closeBigPicture = () => {
+  bigPictureElement.classList.add('hidden');
+  modalOpenElement.classList.remove('modal-open');
+};
+const bigPictureEscKeydown = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeBigPicture();
+    document.removeEventListener('keydown', bigPictureEscKeydown);
+  }
+};
 
 const drawBigPicture = (photo) => {
   bigPictureImgElement.src = photo.url;
@@ -17,16 +30,15 @@ const drawBigPicture = (photo) => {
   socialCommentsElement.innerHTML = '';
   if(photo.comments.length > 0){
     const socialCommentsFragment = document.createDocumentFragment();
-    photo.comments.forEach((comment) => {
-      const{avatar, name, message,} = comment;
+    photo.comments.forEach(({avatar, name, message,}) => {
       const newComment = document.createElement('li');
       newComment.classList.add('social__comment');
       const newCommentImg = document.createElement('img');
       newCommentImg.classList.add('social__picture');
       newCommentImg.src = avatar;
       newCommentImg.alt = name;
-      newCommentImg.width = 35;
-      newCommentImg.height = 35;
+      newCommentImg.width = WIDTH;
+      newCommentImg.height = HEIGTH;
       newComment.appendChild(newCommentImg);
       const newCommentList = document.createElement('p');
       newCommentList.classList.add('social__text');
@@ -40,19 +52,11 @@ const drawBigPicture = (photo) => {
   bigPictureCommentCount.classList.add('hidden');
   bigPictureCommentsLoader.classList.add('hidden');
   modalOpenElement.classList.add('.modal-open');
+  document.addEventListener('keydown', bigPictureEscKeydown);
 };
-
-const closeElementClick = () => {
-  bigPictureElement.classList.add('hidden');
-  modalOpenElement.classList.remove('modal-open');
+const closeBigPictureElementClick = () => {
+  closeBigPicture();
+  document.removeEventListener('keydown', bigPictureEscKeydown);
 };
-closeBigPictureElement.addEventListener('click', closeElementClick);
-
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    bigPictureElement.classList.add('hidden');
-    modalOpenElement.classList.remove('modal-open');
-  }
-});
+closeBigPictureElement.addEventListener('click',  closeBigPictureElementClick);
 export {drawBigPicture};
