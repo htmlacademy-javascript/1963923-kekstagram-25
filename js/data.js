@@ -44,7 +44,7 @@ const MAX_LIKES_COUNT = 200;
 const getComment = (id) => {
   const comment = {
     id: id,
-    avatar: `img/avatar/${  getRandomInt(MIN_AVATAR, MAX_AVATAR)  }.svg`,
+    avatar: `img/avatar-${  getRandomInt(MIN_AVATAR, MAX_AVATAR)  }.svg`,
     message: `${getRandomArrayElement(MESSAGES)  } ${  getRandomArrayElement(MESSAGES)}`,
     name: getRandomArrayElement(NAMES)
   };
@@ -65,5 +65,4 @@ const getPhoto = (id) =>{
 
 
 const getPhotos = (count) => getRandomArray(getPhoto, count);
-
 export {getPhotos};
