@@ -37,7 +37,7 @@ const NAMES = [
 const MIN_AVATAR = 1;
 const MAX_AVATAR = 6;
 const MIN_COMMENTS_COUNT = 0;
-const MAX_COMMENTS_COUNT = 5;
+const MAX_COMMENTS_COUNT = 15;
 const MIN_LIKES_COUNT = 15;
 const MAX_LIKES_COUNT = 200;
 
