@@ -5,6 +5,7 @@ const valueControlElement = document.querySelector('.scale__control--value');
 const effectElements = document.querySelectorAll('.effects__radio');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectValueElement = document.querySelector('.effect-level__value');
+const sliderForm = document.querySelector('.img-upload__effect-level');
 
 const MIN_SCALE = 25;
 const MAX_SCALE = 100;
@@ -53,12 +54,20 @@ const effectStyleMap = {
 };
 
 const effectSliderOptionsMap = {
-  'effect-chrome': {
+  'effect-none':{
     range: {
       min: 0,
       max: 1
     },
     start: 0,
+    step: 0.1
+  },
+  'effect-chrome': {
+    range: {
+      min: 0,
+      max: 1
+    },
+    start: 1,
     step: 0.1
   },
   'effect-sepia': {
@@ -66,7 +75,7 @@ const effectSliderOptionsMap = {
       min: 0,
       max: 1
     },
-    start: 0,
+    start: 1,
     step: 0.1
   },
   'effect-marvin': {
@@ -74,7 +83,7 @@ const effectSliderOptionsMap = {
       min: 0,
       max: 100
     },
-    start: 0,
+    start: 100,
     step: 1
   },
   'effect-phobos': {
@@ -82,7 +91,7 @@ const effectSliderOptionsMap = {
       min: 0,
       max: 3
     },
-    start: 0,
+    start: 3,
     step: 0.1
   },
   'effect-heat': {
@@ -90,7 +99,7 @@ const effectSliderOptionsMap = {
       min: 1,
       max: 3
     },
-    start: 0,
+    start: 3,
     step: 0.1
   }
 };
@@ -110,24 +119,27 @@ const defaultSliderOptions = {
   },
 };
 
+const defaultOptions = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
+noUiSlider.create(sliderElement, defaultOptions);
+sliderElement.noUiSlider.on('update', () => {
+  const effectValue = sliderElement.noUiSlider.get();
+  effectValueElement.value = effectValue;
+  imgUploadPrewiew.style.filter = effectStyleMap[currentEffect](effectValue);
+});
+sliderForm.style.opacity = 0;
+sliderElement.setAttribute('disabled', true);
 effectElements.forEach((effectElement)=>{
   effectElement.addEventListener('change', (evt) => {
     if (evt.target.id === 'effect-none'){
-      currentEffect = evt.target.id;
-      sliderElement.noUiSlider.destroy();
-    } else if (currentEffect === 'effect-none') {
-      currentEffect = evt.target.id;
-      const options = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
-      noUiSlider.create(sliderElement, options);
-      sliderElement.noUiSlider.on('update', () => {
-        const effectValue = sliderElement.noUiSlider.get();
-        effectValueElement.value = effectValue;
-        imgUploadPrewiew.style.filter = effectStyleMap[currentEffect](effectValue);
-      });
-    } else {
-      currentEffect = evt.target.id;
-      const options = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
-      sliderElement.noUiSlider.updateOptions(options);
+      sliderForm.style.opacity = 0;
+      sliderElement.setAttribute('disabled', true);
     }
+    if (currentEffect === 'effect-none'){
+      sliderForm.style.opacity = 1;
+      sliderElement.removeAttribute('disabled');
+    }
+    currentEffect = evt.target.id;
+    const options = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
+    sliderElement.noUiSlider.updateOptions(options);
   });
 });
