@@ -1,5 +1,11 @@
+import {savePhoto} from './save.js';
+import {closeNewPhotoClick} from './form.js';
+import {resetFilter} from './editBigPhoto.js';
+import {onRequestFinish} from './util.js';
 const formElement = document.querySelector('.img-upload__form');
 const hashtagElement = formElement.querySelector('.text__hashtags');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const maxCountHashtags = 5;
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__text',
@@ -44,8 +50,18 @@ formElement.addEventListener('submit', (evt) => {
 
   const isValid = pristine.validate();
   if (isValid) {
-    //console.log('Можно отправлять');
-  } else {
-    //console.log('Форма невалидна');
+    savePhoto(
+      formElement,
+      () => {
+        formElement.reset();
+        resetFilter();
+        onRequestFinish(successTemplate, '.success__button');
+        closeNewPhotoClick();
+      },
+      () => {
+        onRequestFinish(errorTemplate, '.error__button');
+        closeNewPhotoClick();
+      }
+    );
   }
 });

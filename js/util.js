@@ -30,4 +30,28 @@ const getRandomArray = (callback, count) => {
   return data;
 };
 
-export{getRandomInt, getLengthOfString, getRandomArrayElement, getRandomArray};
+const onRequestFinish = (template, closeButtonClassName) => {
+  const element = template.cloneNode(true);
+  const buttonElement = element.querySelector(closeButtonClassName);
+  const onEscKeydown = (event) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      element.remove();
+      document.removeEventListener('keydown', onEscKeydown);
+    }
+  };
+  buttonElement.addEventListener('click', () => {
+    element.remove();
+    document.removeEventListener('keydown', onEscKeydown);
+  });
+  element.addEventListener('click', (event) => {
+    if(event.target === element){
+      element.remove();
+      document.removeEventListener('keydown', onEscKeydown);
+    }
+  });
+  document.addEventListener('keydown', onEscKeydown);
+  document.body.appendChild(element);
+};
+
+export{getRandomInt, getLengthOfString, getRandomArrayElement, getRandomArray, onRequestFinish};
