@@ -54,4 +54,22 @@ const onRequestFinish = (template, closeButtonClassName) => {
   document.body.appendChild(element);
 };
 
-export{getRandomInt, getLengthOfString, getRandomArrayElement, getRandomArray, onRequestFinish};
+const shuffle = (arr) => arr.sort(() => getRandomInt(0, 2)  ? -1 : 1);
+
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export{
+  getRandomInt,
+  getLengthOfString,
+  getRandomArrayElement,
+  getRandomArray,
+  onRequestFinish,
+  shuffle,
+  debounce
+};

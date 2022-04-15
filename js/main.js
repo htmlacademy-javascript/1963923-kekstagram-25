@@ -1,13 +1,19 @@
 import {drawPhotos} from './draw.js';
 import './form.js';
-import './user-form.js';
-import './editBigPhoto.js';
-import {createLoader} from './load.js';
+import './form-validation.js';
+import './edit-big-photo.js';
+import {loadPhotos} from './load-photos.js';
 import {onRequestFinish} from './util.js';
+import {initFilters} from './filters.js';
 
 const errorTemplate = document.querySelector('#error-photos').content.querySelector('.error');
 
-createLoader(
-  (photos) => {drawPhotos(photos);},
-  () => {onRequestFinish(errorTemplate, '.error__button');}
+loadPhotos(
+  (photos) => {
+    drawPhotos(photos);
+    initFilters(photos);
+  },
+  () => {
+    onRequestFinish(errorTemplate, '.error__button');
+  }
 );

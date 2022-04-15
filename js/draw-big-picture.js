@@ -7,12 +7,15 @@ const bigPictureCommentCount = bigPictureElement.querySelector('.social__comment
 const bigPictureCommentsLoader = bigPictureElement.querySelector('.comments-loader');
 const modalOpenElement = document.querySelector('body');
 const closeBigPictureElement = bigPictureElement.querySelector('#picture-cancel');
+
 const WIDTH = 35;
 const HEIGTH = 35;
+
 const closeBigPicture = () => {
   bigPictureElement.classList.add('hidden');
   modalOpenElement.classList.remove('modal-open');
 };
+
 const bigPictureEscKeydown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
@@ -20,11 +23,13 @@ const bigPictureEscKeydown = (evt) => {
     document.removeEventListener('keydown', bigPictureEscKeydown);
   }
 };
+
 const pagination = {
   startNumber: 0,
   quantity: 5,
   comments: []
 };
+
 const renderComments = () => {
   const from = pagination.startNumber * pagination.quantity;
   const to = from + pagination.quantity;
@@ -55,6 +60,7 @@ const renderComments = () => {
     bigPictureCommentCount.innerHTML = `${to} из <span class="comments-count">${pagination.comments.length}</span> комментариев`;
   }
 };
+
 const drawBigPicture = (photo) => {
   bigPictureImgElement.src = photo.url;
   bigPictureLikesElement.textContent = photo.likes;
@@ -69,9 +75,12 @@ const drawBigPicture = (photo) => {
   modalOpenElement.classList.add('.modal-open');
   document.addEventListener('keydown', bigPictureEscKeydown);
 };
+
 const closeBigPictureElementClick = () => {
   closeBigPicture();
   document.removeEventListener('keydown', bigPictureEscKeydown);
 };
+
 closeBigPictureElement.addEventListener('click',  closeBigPictureElementClick);
+
 export {drawBigPicture};
