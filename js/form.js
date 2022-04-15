@@ -39,3 +39,4 @@ const closeNewPhotoClick = () => {
 };
 
 closeNewPhotoElement.addEventListener('click',  closeNewPhotoClick);
+export {closeNewPhotoClick};

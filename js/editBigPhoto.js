@@ -143,3 +143,10 @@ effectElements.forEach((effectElement)=>{
     sliderElement.noUiSlider.updateOptions(options);
   });
 });
+const resetFilter = () => {currentEffect = 'effect-none';
+  const options = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
+  sliderElement.noUiSlider.updateOptions(options);
+  sliderForm.style.opacity = 0;
+  sliderElement.setAttribute('disabled', true);
+};
+export {resetFilter};
