@@ -15,12 +15,12 @@ const pristine = new Pristine(formElement, {
 const re = /^#[A-Za-zА-яа-яЁё0-9]{1,19}$/;
 
 pristine.addValidator(hashtagElement, (value) => {
-  const hashtags = value.split(' ');
+  const hashtags = value ? value.split(' ') : [];
   return hashtags.length <= maxCountHashtags;
 }, `Нельзя указывать больше ${maxCountHashtags} ХэшТегов`);
 
 pristine.addValidator(hashtagElement, (value) => {
-  const hashtags = value.split(' ');
+  const hashtags = value ? value.split(' ') : [];
   for(let i = 0; i < hashtags.length; i++){
     if(!re.test(hashtags[i])){
       return false;
@@ -30,7 +30,7 @@ pristine.addValidator(hashtagElement, (value) => {
 }, 'Не валидный ХэшТег');
 
 pristine.addValidator(hashtagElement, (value) => {
-  const hashtags = value.split(' ');
+  const hashtags = value ? value.split(' ') : [];
   const newHashtags = hashtags.map((hashtag) => hashtag.toLowerCase());
   if (newHashtags.length > 1) {
     for (let i = 0; i < newHashtags.length; i++) {
