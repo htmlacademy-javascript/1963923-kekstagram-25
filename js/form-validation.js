@@ -1,17 +1,20 @@
-import {savePhoto} from './save.js';
-import {closeNewPhotoClick} from './form.js';
-import {resetFilter} from './editBigPhoto.js';
+import {savePhoto} from './save-photo.js';
+import {closeForm} from './form.js';
+import {resetFilter} from './edit-big-photo.js';
 import {onRequestFinish} from './util.js';
+
 const formElement = document.querySelector('.img-upload__form');
 const hashtagElement = formElement.querySelector('.text__hashtags');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const maxCountHashtags = 5;
+
 const pristine = new Pristine(formElement, {
   classTo: 'img-upload__text',
   errorTextParent: 'img-upload__text',
   errorTextClass: 'img-upload__text_error',
 });
+
 const re = /^#[A-Za-zА-яа-яЁё0-9]{1,19}$/;
 
 pristine.addValidator(hashtagElement, (value) => {
@@ -56,11 +59,11 @@ formElement.addEventListener('submit', (evt) => {
         formElement.reset();
         resetFilter();
         onRequestFinish(successTemplate, '.success__button');
-        closeNewPhotoClick();
+        closeForm();
       },
       () => {
         onRequestFinish(errorTemplate, '.error__button');
-        closeNewPhotoClick();
+        closeForm();
       }
     );
   }

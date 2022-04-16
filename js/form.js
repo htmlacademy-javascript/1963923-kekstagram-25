@@ -1,42 +1,41 @@
-const openNewForm = document.querySelector('.img-upload');
-const openNewElement = openNewForm.querySelector('#upload-file');
-const editFormPhoto = openNewForm.querySelector('.img-upload__overlay');
-const modalOpenElement = document.querySelector('body');
-const closeNewPhotoElement = openNewForm.querySelector('#upload-cancel');
 const formElement = document.querySelector('.img-upload__form');
-const closeNewPhoto = () => {
-  editFormPhoto.classList.add('hidden');
-  modalOpenElement.classList.remove('modal-open');
-  openNewElement.value = '';
+const imgUploadElement = document.querySelector('.img-upload');
+const uploadFileElement = imgUploadElement.querySelector('#upload-file');
+const overlayElement = imgUploadElement.querySelector('.img-upload__overlay');
+const cancelElement = imgUploadElement.querySelector('#upload-cancel');
+
+const closeForm = () => {
+  overlayElement.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  uploadFileElement.value = '';
+  document.removeEventListener('keydown', onEscKeydown);
 };
-const newPhotoEscKeydown = (evt) => {
+
+function onEscKeydown(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeNewPhoto();
-    document.removeEventListener('keydown', newPhotoEscKeydown);
+    closeForm();
+    document.removeEventListener('keydown', onEscKeydown);
   }
+}
+
+const openForm = () => {
+  overlayElement.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onEscKeydown);
+
 };
 
-const openNewPhoto = () => {
-  editFormPhoto.classList.remove('hidden');
-  modalOpenElement.classList.add('modal-open');
-  document.addEventListener('keydown', newPhotoEscKeydown);
-
-};
-openNewElement.addEventListener('change', openNewPhoto);
+uploadFileElement.addEventListener('change', openForm);
 
 formElement.addEventListener('focusin',() => {
-  document.removeEventListener('keydown', newPhotoEscKeydown);
+  document.removeEventListener('keydown', onEscKeydown);
 });
 
 formElement.addEventListener('focusout',() => {
-  document.addEventListener('keydown', newPhotoEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
 });
 
-const closeNewPhotoClick = () => {
-  closeNewPhoto();
-  document.removeEventListener('keydown', newPhotoEscKeydown);
-};
+cancelElement.addEventListener('click',  closeForm);
 
-closeNewPhotoElement.addEventListener('click',  closeNewPhotoClick);
-export {closeNewPhotoClick};
+export {closeForm};

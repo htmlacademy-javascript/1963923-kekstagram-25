@@ -1,4 +1,4 @@
-const createLoader = (onSuccess, onError) =>
+const loadPhotos = (onSuccess, onError) =>
   fetch(
     'https://25.javascript.pages.academy/kekstagram/data',    {
       method: 'GET',
@@ -19,4 +19,4 @@ const createLoader = (onSuccess, onError) =>
       onError(err);
     });
 
-export {createLoader};
+export {loadPhotos};

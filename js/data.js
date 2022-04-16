@@ -65,4 +65,5 @@ const getPhoto = (id) =>{
 
 
 const getPhotos = (count) => getRandomArray(getPhoto, count);
+
 export {getPhotos};
