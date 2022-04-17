@@ -12,3 +12,9 @@ uploadFileElement.addEventListener('change', () => {
     previewElement.src = URL.createObjectURL(file);
   }
 });
+
+const resetFile = () => {
+  uploadFileElement.value = '';
+};
+
+export{resetFile};

@@ -2,6 +2,7 @@ import {savePhoto} from './save-photo.js';
 import {closeForm} from './form.js';
 import {resetFilter} from './edit-big-photo.js';
 import {onRequestFinish} from './util.js';
+import {resetFile} from './preview.js';
 
 const formElement = document.querySelector('.img-upload__form');
 const hashtagElement = formElement.querySelector('.text__hashtags');
@@ -58,6 +59,7 @@ formElement.addEventListener('submit', (evt) => {
       () => {
         formElement.reset();
         resetFilter();
+        resetFile();
         onRequestFinish(successTemplate, '.success__button');
         closeForm();
       },
