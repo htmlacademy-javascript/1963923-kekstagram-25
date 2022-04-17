@@ -121,6 +121,8 @@ const defaultSliderOptions = {
 
 const defaultOptions = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
 noUiSlider.create(sliderElement, defaultOptions);
+sliderForm.style.opacity = 0;
+sliderElement.setAttribute('disabled', true);
 sliderElement.noUiSlider.on('update', () => {
   const effectValue = sliderElement.noUiSlider.get();
   effectValueElement.value = effectValue;
