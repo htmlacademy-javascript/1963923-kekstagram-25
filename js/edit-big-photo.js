@@ -12,9 +12,9 @@ const MAX_SCALE = 100;
 const STEP_SCALE = 25;
 let scaleValue = parseInt(valueControlElement.value, 10);
 
-function smallerControl() {
+function onSmallerControlClick() {
   if (scaleValue === MAX_SCALE){
-    biggerControlElement.addEventListener('click', biggerControl);
+    biggerControlElement.addEventListener('click', onBiggerControlClick);
   }
 
   scaleValue -= STEP_SCALE;
@@ -22,13 +22,13 @@ function smallerControl() {
   imgUploadPrewiew.style.transform = `scale(${scaleValue/100})`;
 
   if (scaleValue === MIN_SCALE){
-    smallerControlElement.removeEventListener('click', smallerControl);
+    smallerControlElement.removeEventListener('click', onSmallerControlClick);
   }
 }
 
-function biggerControl() {
+function onBiggerControlClick() {
   if (scaleValue === MIN_SCALE){
-    smallerControlElement.addEventListener('click', smallerControl);
+    smallerControlElement.addEventListener('click', onSmallerControlClick);
   }
 
   scaleValue += STEP_SCALE;
@@ -36,11 +36,11 @@ function biggerControl() {
   imgUploadPrewiew.style.transform = `scale(${scaleValue/100})`;
 
   if (scaleValue === MAX_SCALE){
-    biggerControlElement.removeEventListener('click', biggerControl);
+    biggerControlElement.removeEventListener('click', onBiggerControlClick);
   }
 }
 
-smallerControlElement.addEventListener('click', smallerControl);
+smallerControlElement.addEventListener('click', onSmallerControlClick);
 
 let currentEffect = 'effect-none';
 
@@ -121,18 +121,20 @@ const defaultSliderOptions = {
 
 const defaultOptions = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
 noUiSlider.create(sliderElement, defaultOptions);
+sliderForm.style.opacity = '0';
+sliderElement.setAttribute('disabled', 'disabled');
 sliderElement.noUiSlider.on('update', () => {
   const effectValue = sliderElement.noUiSlider.get();
   effectValueElement.value = effectValue;
   imgUploadPrewiew.style.filter = effectStyleMap[currentEffect](effectValue);
 });
-sliderForm.style.opacity = 0;
-sliderElement.setAttribute('disabled', true);
+sliderForm.style.opacity = '0';
+sliderElement.setAttribute('disabled', 'disabled');
 effectElements.forEach((effectElement)=>{
   effectElement.addEventListener('change', (evt) => {
     if (evt.target.id === 'effect-none'){
-      sliderForm.style.opacity = 0;
-      sliderElement.setAttribute('disabled', true);
+      sliderForm.style.opacity = '0';
+      sliderElement.setAttribute('disabled', 'disabled');
     }
     if (currentEffect === 'effect-none'){
       sliderForm.style.opacity = 1;
@@ -147,8 +149,8 @@ effectElements.forEach((effectElement)=>{
 const resetFilter = () => {currentEffect = 'effect-none';
   const options = Object.assign({}, effectSliderOptionsMap[currentEffect], defaultSliderOptions);
   sliderElement.noUiSlider.updateOptions(options);
-  sliderForm.style.opacity = 0;
-  sliderElement.setAttribute('disabled', true);
+  sliderForm.style.opacity = '0';
+  sliderElement.setAttribute('disabled', 'disabled');
 };
 
 export {resetFilter};
