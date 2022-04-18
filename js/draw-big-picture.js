@@ -14,20 +14,37 @@ const HEIGTH = 35;
 const closeBigPicture = () => {
   bigPictureElement.classList.add('hidden');
   modalOpenElement.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onEscKeydown);
 };
 
-const bigPictureEscKeydown = (evt) => {
+function onEscKeydown(evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeBigPicture();
-    document.removeEventListener('keydown', bigPictureEscKeydown);
   }
-};
+}
 
 const pagination = {
   startNumber: 0,
   quantity: 5,
   comments: []
+};
+const renderComment = ({avatar, name, message}) => {
+  const newComment = document.createElement('li');
+  newComment.classList.add('social__comment');
+  const newCommentImg = document.createElement('img');
+  newCommentImg.classList.add('social__picture');
+  newCommentImg.src = avatar;
+  newCommentImg.alt = name;
+  newCommentImg.width = WIDTH;
+  newCommentImg.height = HEIGTH;
+  newComment.appendChild(newCommentImg);
+  const newCommentList = document.createElement('p');
+  newCommentList.classList.add('social__text');
+  newCommentList.textContent = message;
+  newComment.appendChild(newCommentList);
+  return newComment;
 };
 
 const renderComments = () => {
@@ -35,20 +52,8 @@ const renderComments = () => {
   const to = from + pagination.quantity;
   const socialCommentsFragment = document.createDocumentFragment();
   socialCommentsFragment.innerHTML = '';
-  pagination.comments.slice(from, to).forEach(({avatar, name, message,}) => {
-    const newComment = document.createElement('li');
-    newComment.classList.add('social__comment');
-    const newCommentImg = document.createElement('img');
-    newCommentImg.classList.add('social__picture');
-    newCommentImg.src = avatar;
-    newCommentImg.alt = name;
-    newCommentImg.width = WIDTH;
-    newCommentImg.height = HEIGTH;
-    newComment.appendChild(newCommentImg);
-    const newCommentList = document.createElement('p');
-    newCommentList.classList.add('social__text');
-    newCommentList.textContent = message;
-    newComment.appendChild(newCommentList);
+  pagination.comments.slice(from, to).forEach((comment) => {
+    const newComment = renderComment(comment);
     socialCommentsFragment.appendChild(newComment);
   });
   socialCommentsElement.appendChild(socialCommentsFragment);
@@ -73,14 +78,10 @@ const drawBigPicture = (photo) => {
   bigPictureCommentsLoader.addEventListener('click', renderComments);
   bigPictureElement.classList.remove('hidden');
   modalOpenElement.classList.add('.modal-open');
-  document.addEventListener('keydown', bigPictureEscKeydown);
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onEscKeydown);
 };
 
-const closeBigPictureElementClick = () => {
-  closeBigPicture();
-  document.removeEventListener('keydown', bigPictureEscKeydown);
-};
-
-closeBigPictureElement.addEventListener('click',  closeBigPictureElementClick);
+closeBigPictureElement.addEventListener('click', closeBigPicture);
 
 export {drawBigPicture};
